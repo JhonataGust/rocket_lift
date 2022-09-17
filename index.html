@@ -13,26 +13,28 @@
 <body>
 <div id="app">
   <div v-if="form">
+    <form @submit="getResult">
     <section class="prime-card">
         <section class="card-top">
-          <img class="img-rocket" src="./img/rocket.png" alt="">
+          <img class="img-rocket" src="./img/rocket.png" alt="" required>
           <h2 class="title">Crazy Rocket</h2>
         </section>
 
         <section class="item-middle">
             <label>How much fuel in the tank? </label>
-            <input v-model="gas_quantity" type="number" placeholder="ex:69L" min="1" max="1000">
+            <input v-model="gas_quantity" type="number" placeholder="ex:69L" required>
         </section>
 
         <section class="item-middle">
           <label>Amount consumed every 15,376Km: </label>
-          <input v-model="consumed" type="number" placeholder="ex:200L" min="1">
+          <input v-model="consumed" type="number" placeholder="ex:200L" required>
         </section>
 
         <section class="item-bottom">
-          <button @click="getResult" type="submit">Fire Rocket</button>
+          <button type="submit">Fire Rocket</button>
         </section>
     </section>
+  </form>
   </div>
       <div v-if="lift" class="lift_rocket">
         <div class="moon">
@@ -51,7 +53,7 @@
               <h4 v-else="completed">
                 Infelizmente não foi dessa vez :( <br/><br/>
                 Total Combustivel Gasto: 200 litros <br/><br/>
-                Porcentagem de acerto: {{porcent}}%
+                Porcentagem de acerto: {{String(porcent).substring(0,2)}}%
               </h4>
               <details>
                 <summary>Gas History Details</summary>
@@ -67,12 +69,15 @@
         </div>
     </div>
     <div class="restarting" v-if="restarting">
-      <h2>Preparando Foguete</h2>
+      <h2 style="color:aliceblue">Preparando Foguete</h2>
+    </div>
+    <div id="right_info">
+      <div v-html="total_gas"></div>
     </div>
 </div>
 <script>
 //Just put you php localhost example => http://localhost:8080/project_folder
-const LOCALHOST = 'http://localhost:80/rocket'
+const LOCALHOST = 'http://localhost/rocket'
 
 const { createApp } = Vue
 createApp({
@@ -88,7 +93,8 @@ createApp({
       restarting:'',
       porcent: 0,
       consumed_gas: '',
-      results: []
+      results: [],
+      total_gas: ''
     }
   },
   methods: {
@@ -97,13 +103,8 @@ createApp({
         this.show_message = !this.show_message;
       },2000)
     },
-    getResult(){
-      axios
-      .post(`${LOCALHOST}/arr.php`,{
-        aa: 'test'
-      })
-      .then(response => (console.log(this.info = response)))
-
+    getResult(e){
+      e.preventDefault();
       let consumed_gas_count = null;
       let i = false;
       let b = 1;
@@ -124,10 +125,22 @@ createApp({
       }
       console.log(consumed_gas_count);
       this.results[this.results.length - 1].gas_missing >= 560000 ? this.completed = true : this.completed
-      this.porcent = String((560000 - this.results[this.results.length - 1].gas_missing) / 100).substring(1, 2);
+      this.porcent = ((560000 - this.results[this.results.length - 1].gas_missing ) / 100);
       this.lift = true;
       this.form = false;
       this.showMessage();
+
+      let rocket_data =  {
+        gas_total: Number(this.results[this.results.length - 1].gas_missing)
+      }
+      const options = {
+                method: 'POST',
+                headers: { 'content-type': 'application/form-data' },
+                data: this.convertToFormData(rocket_data),
+                url: `${LOCALHOST}/arr.php`,
+            };
+      axios(options)
+      .then(response => (this.total_gas = response.data))
     },
     tryAgain(){
       this.restarting = true;
@@ -135,6 +148,13 @@ createApp({
       setTimeout(() => {
         location.reload();
       },3000)
+    },
+    convertToFormData(obj){
+      let formData = new FormData();
+            for(let key in obj) {
+                formData.append(key, obj[key]);
+            }
+            return formData;
     }
   }
 }).mount('#app')
