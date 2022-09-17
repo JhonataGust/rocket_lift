@@ -175,3 +175,11 @@ section.item-bottom > button {
     opacity: 80%;
     color: rgba(169, 169, 169, 0.534);
 }
+
+@media only screen and (max-width: 560px){
+    .item-bottom > button {
+        width: 45% !important;
+        height: unset !important;
+        font-size: 5em;
+    }
+}
