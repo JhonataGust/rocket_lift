@@ -9,13 +9,19 @@
 </head>
 <body>
 <div id="app">
-    <div class="inputs">
-      <input v-model="gas_quantity" />
+    <div class="inputs" v-if="count > 0">
+      <input v-model="gas_quantity"/>
       <input v-model="consumed"/>
-      <button v-model="fly">Go</button>
+      <button>Go</button>
+    </div>
+      <div class="lift_rocket">
+        <div class="rocket">
+          <div class="rocket_animation">
+            <img src="public/rocket.png"/>
+          </div>
+        </div>
     </div>
 </div>
-
 <script>
  const { createApp } = Vue
 
