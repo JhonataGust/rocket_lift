@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+.lift_rocket{
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+}
+
+.lift_rocket .rocket .rocket_animation img{
+    width: 60px;
+}
+.completed {
+    animation: lift 2s ease-in-out;
+}
+.half_way{
+    animation: lift 2s ease-in-out;
+    margin-top: 150px;
+}
+.lift_rocket .moon img{
+    width: 60px;
+}
+.message {
+    transition: opacity 3s;
+    font-family: Arial;
+    font-size: 12px;
+    animation: fade_in 2s;
+}
+
+.btn_try_again button{
+    color: white;
+    background: rgb(246, 114, 114);
+    padding: 10px 10px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+.restarting {
+    text-align: center;
+    animation: fade_in 2s;
+}
+
+@keyframes fade_in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+@keyframes lift {
+    0%{
+        transform: translateY(600px);
+    }
+}

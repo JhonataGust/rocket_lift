@@ -1,34 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/vue@3"></script>
-    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <title>Rocket</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div id="app">
-    <div class="inputs" v-if="count > 0">
+    <div class="inputs" v-if="form">
       <input v-model="gas_quantity"/>
       <input v-model="consumed"/>
-      <button>Go</button>
+      <button @click="getResult">Go</button>
     </div>
-      <div class="lift_rocket">
+      <div v-if="lift" class="lift_rocket">
+        <div class="moon">
+          <div class="moon_animation">
+            <img src="img/moon.png"/>
+          </div>
+        </div>
         <div class="rocket">
-          <div class="rocket_animation">
-            <img src="public/rocket.png"/>
+          <div class="rocket_animation completed" :class="[completed ? 'completed' : 'half_way']">
+            <img src="img/rocket.png"/>
+            <div class="message" v-if="show_message">
+              <h4 v-if="completed">Você chegou na Lua! <br/><br/>
+                Total Combustivel Gasto: 200 litros <br/><br/>
+                Porcentagem de acerto: 100%
+              </h4>
+              <h4 v-else="completed">
+                Infelizmente não foi dessa vez :( <br/><br/>
+                Total Combustivel Gasto: 200 litros <br/><br/>
+                Porcentagem de acerto: {{porcent}}%
+              </h4>
+              <details>
+                <summary>Gas History Details</summary>
+                <div class="details" v-for="result in results" :v-key="result.id">
+                  <p>{{result.time}} Time =>  Gas Consumed: {{result.gas_missing}} litros</p>
+                </div>
+            </details>
+              <div class="btn_try_again">
+                <button @click="tryAgain">Tentar de Novo</button>
+              </div>
+            </div>
           </div>
         </div>
     </div>
+    <div class="restarting" v-if="restarting">
+      <h2>Preparando Foguete</h2>
+    </div>
 </div>
 <script>
- const { createApp } = Vue
+//Just put you php localhost example => http://localhost:8080/project_folder
+const LOCALHOST = 'http://localhost:80/rocket'
 
+const { createApp } = Vue
 createApp({
   data() {
     return {
-      count: 0
+      count: 0,
+      form: true,
+      gas_quantity: '',
+      consumed: '',
+      completed: false,
+      lift: false,
+      show_message: false,
+      restarting:'',
+      porcent: 0,
+      consumed_gas: '',
+      results: []
+    }
+  },
+  methods: {
+    showMessage(){
+      setTimeout(()=> {
+        this.show_message = !this.show_message;
+      },2000)
+    },
+    getResult(){
+      axios
+      .post(`${LOCALHOST}/arr.php`,{
+        aa: 'test'
+      })
+      .then(response => (console.log(this.info = response)))
+
+      let consumed_gas_count = null;
+      let i = false;
+      let b = 1;
+      while(i == false){
+        if(parseInt(consumed_gas_count) <= 0){
+          i = true;
+        }
+        if((384.400 / 15.376) == this.results.length + 1){
+          i = true;
+        }
+        if (consumed_gas_count != null){
+          consumed_gas_count = consumed_gas_count - this.consumed
+        }else{
+          consumed_gas_count = this.gas_quantity - this.consumed
+        }
+        this.results.push({time:b++,gas_missing: consumed_gas_count});
+        console.log(consumed_gas_count);
+      }
+      console.log(consumed_gas_count);
+      this.results[this.results.length - 1].gas_missing >= 560000 ? this.completed = true : this.completed
+      this.porcent = String((560000 - this.results[this.results.length - 1].gas_missing) / 100).substring(1, 2);
+      this.lift = true;
+      this.form = false;
+      this.showMessage();
+    },
+    tryAgain(){
+      this.restarting = true;
+      this.show_message = !this.showMessage;
+      setTimeout(() => {
+        location.reload();
+      },3000)
     }
   }
 }).mount('#app')
