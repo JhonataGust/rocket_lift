@@ -10,10 +10,28 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <form class="main">
+      <section class="prime-card">
+          <section class="card-top">
+            <img class="img-rocket" src="./img/rocket.png" alt="">
+            <h2 class="title">Crazy Rocket</h2>
+          </section>
 
-  <main class="main">
-      <h1></h1>
-  </main>
+          <section class="item-middle">
+              <label>How much fuel in the tank? </label>
+              <input v-model="gas_quantity" type="number" placeholder="ex:69L" min="1" max="1000">
+          </section>
+
+          <section class="item-middle">
+            <label>Amount consumed every 15,376Km: </label>
+            <input v-model="consumed" type="number" placeholder="ex:200L" min="1">
+          </section>
+
+          <section class="item-bottom">
+            <button v-model="fly" type="submit">Fire Rocket</button>
+          </section>
+      </section>
+  </form>
 
 
 
