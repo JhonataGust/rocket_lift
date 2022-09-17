@@ -12,11 +12,28 @@
 </head>
 <body>
 <div id="app">
-    <div class="inputs" v-if="form">
-      <input v-model="gas_quantity"/>
-      <input v-model="consumed"/>
-      <button @click="getResult">Go</button>
-    </div>
+  <div v-if="form">
+    <section class="prime-card">
+        <section class="card-top">
+          <img class="img-rocket" src="./img/rocket.png" alt="">
+          <h2 class="title">Crazy Rocket</h2>
+        </section>
+
+        <section class="item-middle">
+            <label>How much fuel in the tank? </label>
+            <input v-model="gas_quantity" type="number" placeholder="ex:69L" min="1" max="1000">
+        </section>
+
+        <section class="item-middle">
+          <label>Amount consumed every 15,376Km: </label>
+          <input v-model="consumed" type="number" placeholder="ex:200L" min="1">
+        </section>
+
+        <section class="item-bottom">
+          <button @click="getResult" type="submit">Fire Rocket</button>
+        </section>
+    </section>
+  </div>
       <div v-if="lift" class="lift_rocket">
         <div class="moon">
           <div class="moon_animation">
