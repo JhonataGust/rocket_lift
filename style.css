@@ -71,6 +71,10 @@
     background: #111111;
 }
 
+.btn_try_again{
+    margin-top: 32px;
+}
+
 .btn_try_again button{
     max-width: 35%;
     height: 45px;
@@ -100,6 +104,12 @@
     font: normal 2em var(--font-three);
     color: white;
     text-shadow: -2px 2px 3px #CE1F0E;
+}
+.left {
+    position: fixed;
+    z-index: 3;
+    bottom: 20px;
+    right: 20px;
 }
 
 @keyframes fade_in {
