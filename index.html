@@ -12,7 +12,7 @@
 </head>
 <body>
 <div id="app">
-  <div v-if="form">
+  <div v-if="form" class="form">
     <section class="prime-card">
         <section class="card-top">
           <img class="img-rocket" src="./img/rocket.png" alt="">
@@ -44,12 +44,12 @@
           <div class="rocket_animation completed" :class="[completed ? 'completed' : 'half_way']">
             <img src="img/rocket.png"/>
             <div class="message" v-if="show_message">
-              <h4 v-if="completed">Você chegou na Lua! <br/><br/>
+              <h4 v-if="completed">&#x2728;Você chegou na Lua&#x2728;<br/><br/>
                 Total Combustivel Gasto: 200 litros <br/><br/>
                 Porcentagem de acerto: 100%
               </h4>
               <h4 v-else="completed">
-                Infelizmente não foi dessa vez :( <br/><br/>
+                Infelizmente não foi dessa vez &#x1F615; <br/><br/>
                 Total Combustivel Gasto: 200 litros <br/><br/>
                 Porcentagem de acerto: {{porcent}}%
               </h4>
@@ -60,14 +60,14 @@
                 </div>
             </details>
               <div class="btn_try_again">
-                <button @click="tryAgain">Tentar de Novo</button>
+                <button @click="tryAgain">Try Again</button>
               </div>
             </div>
           </div>
         </div>
     </div>
     <div class="restarting" v-if="restarting">
-      <h2>Preparando Foguete</h2>
+      <h2>Preparando Foguete...</h2>
     </div>
 </div>
 <script>

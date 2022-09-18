@@ -1,5 +1,30 @@
 @charset "UTF-8";
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+@font-face {
+    font-family: 'alien';
+    src: url('font/alm_____.ttf') format('truetype');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family:'Dark';
+    src: url('font/BloodLust.ttf') format('truetype');
+    font-weight: normal;
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+:root {
+    --font-one: 'alien';
+    --font-two: 'Roboto', sans-serif;
+    --font-three: 'Dark';
+}
+
 .lift_rocket{
     width: 100%;
     display: inline-block;
@@ -21,28 +46,60 @@
 }
 .message {
     transition: opacity 3s;
-    font-family: Arial;
-    font-size: 12px;
+    font-family: var(--font-two);
+    font-size: 1.5em;
+    font-variant: small-caps;
     animation: fade_in 2s;
+
+    margin: auto;
+    margin-top: 100px;
+    max-width: 500px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 18px;
+    -webkit-box-shadow: 2px 2px 15px 10px rgba(255, 0, 0, 0.401); 
+    box-shadow: 2px 2px 15px 10px rgba(255, 0, 0, 0.266); 
 }
 .rocket .message p, h4, summary{
+    padding: 10px;
+    padding-top: 22px;
+    line-height: 18px;
     color: white;
-    font-weight: 700;
+    font-weight: bold;
 }
+
 .details p {
     background: #111111;
 }
+
 .btn_try_again button{
-    color: white;
-    background: rgb(246, 114, 114);
-    padding: 10px 10px;
-    font-weight: 600;
-    border: none;
+    max-width: 35%;
+    height: 45px;
+    font: bold 1.2em var(--font-two);
+    text-shadow: -2px 2px 3px rgba(0, 0, 0, 0.632);
     cursor: pointer;
+    background-color: #ce1e0e79;
+    color: white;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 10px;
 }
+
+.btn_try_again > button:hover {
+    background-image: linear-gradient(to left, transparent, #ce1e0e63, rgba(255, 0, 0, 0.67));
+}
+
+.item-bottom > button:active {
+    opacity: 80%;
+    color: rgba(169, 169, 169, 0.534);
+}
+
 .restarting {
     text-align: center;
+    letter-spacing: 5px;
     animation: fade_in 2s;
+    font: normal 2em var(--font-three);
+    color: white;
+    text-shadow: -2px 2px 3px #CE1F0E;
 }
 
 @keyframes fade_in {
@@ -56,29 +113,13 @@
     }
 }
 
-@font-face {
-    font-family: 'alien';
-    src: url('font/alm_____.ttf') format('truetype');
-    font-weight: normal;
-}
-
-*{
-    margin: 0px;
-    padding: 0px;
-}
-
-:root {
-    --font-one: 'alien';
-    --font-two: 'Roboto', sans-serif;
-}
-
 body {
     background-image: url('./img/img-03.jpg');
     background-position: center center;
     background-attachment: fixed;
 }
 
-form {
+.form {
     margin: auto;
     margin-top: 100px;
     max-width: 800px;
@@ -97,7 +138,8 @@ section.card-top {
 }
 
 section.card-top > img {
-    max-width: 150px;
+    max-width: 125px;
+    padding-bottom: 5px
 }
 
 section.card-top > h2 {
@@ -165,10 +207,30 @@ section.item-bottom > button {
     color: rgba(169, 169, 169, 0.534);
 }
 
-@media only screen and (max-width: 560px){
+@media (max-width: 810px) {
+    .form {
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 615px) {
+    .form {
+        max-width: 500px;
+    }
     .item-bottom > button {
         width: 45% !important;
         height: unset !important;
         font-size: 5em;
+    }
+}
+
+@media only screen and (max-width: 515px){
+    .item-bottom > button {
+        width: 45% !important;
+        height: unset !important;
+        font-size: 5em;
+    }
+    .form {
+        max-width: 450px;
     }
 }
