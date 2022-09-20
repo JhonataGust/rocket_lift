@@ -5,5 +5,5 @@
 called index.html**
 
 //Just put you php localhost example => http://localhost:8080/project_folder
-const LOCALHOST = 'http://localhost/rocket'
+const LOCALHOST = 'http://localhost/rocket_lift'
 ```
