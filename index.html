@@ -43,20 +43,18 @@
           </div>
         </div>
         <div class="rocket">
-          <div class="rocket_animation completed" :class="[completed ? 'completed' : 'half_way']">
+          <div class="rocket_animation completed" :class="[results[results.length - 1].gas_missing > 0 ? 'completed' : 'half_way']">
             <img src="img/rocket.png"/>
             <div class="message" v-if="show_message">
               <h4 v-if="completed">&#x2728;Você chegou na Lua&#x2728;<br/><br/>
-                Porcentagem de acerto: 100%
               </h4>
               <h4 v-else="completed">
                 Infelizmente não foi dessa vez &#x1F615; <br/><br/>
-                Porcentagem de acerto: {{String(porcent).substring(0,2)}}%
               </h4>
               <details>
                 <summary>Gas History Details</summary>
-                <div class="details" v-for="result in results" :v-key="result.id">
-                  <p>{{result.time}} Time =>  Gas Consumed: {{result.gas_missing}} litros</p>
+                <div class="details">
+                  <div v-html="total_gas"></div>
                 </div>
             </details>
               <div class="btn_try_again">
@@ -70,12 +68,12 @@
       <h2>Preparando Foguete...</h2>
     </div>
     <div id="right_info">
-      <div v-html="total_gas"></div>
+      
     </div>
 </div>
 <script>
 //Just put you php localhost example => http://localhost:8080/project_folder
-const LOCALHOST = 'http://localhost/rocket_lift'
+const LOCALHOST = 'http://localhost/rocket'
 
 const { createApp } = Vue
 createApp({
@@ -122,14 +120,14 @@ createApp({
         console.log(consumed_gas_count);
       }
       console.log(consumed_gas_count);
-      this.results[this.results.length - 1].gas_missing >= 560000 ? this.completed = true : this.completed
-      this.porcent = ((560000 - this.results[this.results.length - 1].gas_missing ) / 100);
       this.lift = true;
       this.form = false;
+      this.completed = this.results[this.results.length - 1].gas_missing > 0 ? true : false;
       this.showMessage();
 
       let rocket_data =  {
-        gas_total: Number(this.results[this.results.length - 1].gas_missing)
+        gas_quantity: this.gas_quantity,
+        consumed: this.consumed
       }
       const options = {
                 method: 'POST',
