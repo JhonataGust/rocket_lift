@@ -34,9 +34,11 @@
 .lift_rocket .rocket .rocket_animation img{
     width: 60px;
 }
+
 .completed {
     animation: lift 2s ease-in-out;
 }
+
 .half_way{
     animation: lift 2s ease-in-out;
     margin-top: 150px;
@@ -52,7 +54,6 @@
     animation: fade_in 2s;
 
     margin: auto;
-    margin-top: 100px;
     max-width: 500px;
     background-color: rgba(0, 0, 0, 0.8);
     border-radius: 18px;
@@ -105,6 +106,7 @@
     color: white;
     text-shadow: -2px 2px 3px #CE1F0E;
 }
+
 .left {
     position: fixed;
     z-index: 3;
